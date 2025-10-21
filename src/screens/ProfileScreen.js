@@ -7,7 +7,7 @@ export default function ProfileScreen() {
   return (
     <View style={styles.container}>
       <Avatar.Text size={80} label="DS" style={{ backgroundColor: colors.accent }} />
-      <Title style={styles.name}>DriveSmart Autos</Title>
+      <Title style={styles.name}>A.C. OKOCHA MOTORS</Title>
       <Paragraph style={styles.info}>Contact: +234 800 000 0000</Paragraph>
       <Paragraph style={styles.info}>Address: 123 Auto Lane, Lagos</Paragraph>
 

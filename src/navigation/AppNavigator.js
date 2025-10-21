@@ -4,18 +4,22 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { IconButton } from 'react-native-paper';
 
 import HomeScreen from '../screens/HomeScreen';
-import CarsScreens from '../screens/CarsScreens'; // ✅ matches your file
+import CarsScreens from '../screens/CarsScreens';
 import CarDetailsScreen from '../screens/CarDetailsScreen';
 import BookServiceScreen from '../screens/BookServiceScreen';
 import SellCarScreen from '../screens/SellCarScreen';
+import AdminDashboard from '../screens/AdminScreen';
 import ProfileScreen from '../screens/ProfileScreen';
+import SignupScreen from '../screens/SignupScreen';
+import LoginScreen from '../screens/LoginScreen';
+import LoaderScreen from '../screens/loaderScreen';
 import { colors } from '../utils/colors';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
 //
-// ✅ Define CarsStack — this handles Cars list + Car details
+// ✅ Define CarsStack — handles Cars list + Car details
 //
 function CarsStack() {
   return (
@@ -61,8 +65,6 @@ function Tabs() {
           ),
         }}
       />
-
-      {/* ✅ CarsStack used here */}
       <Tab.Screen
         name="Cars"
         component={CarsStack}
@@ -72,7 +74,6 @@ function Tabs() {
           ),
         }}
       />
-
       <Tab.Screen
         name="Book"
         component={BookServiceScreen}
@@ -82,7 +83,6 @@ function Tabs() {
           ),
         }}
       />
-
       <Tab.Screen
         name="Sell"
         component={SellCarScreen}
@@ -92,7 +92,6 @@ function Tabs() {
           ),
         }}
       />
-
       <Tab.Screen
         name="Profile"
         component={ProfileScreen}
@@ -102,28 +101,44 @@ function Tabs() {
           ),
         }}
       />
+      {/* <Tab.Screen
+        name="Admin"
+        component={AdminDashboard}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <IconButton icon="admin" iconColor={color} size={size} />
+          ),
+        }}
+      /> */}
     </Tab.Navigator>
   );
 }
 
 //
-// ✅ Root Stack (to keep CarDetails hidden from bottom tabs)
+// ✅ Root Stack — Auth + Tabs + Hidden screens
 //
 export default function AppNavigator() {
   return (
-    <Stack.Navigator>
-      {/* Main tab navigation */}
-      <Stack.Screen
-        name="MainTabs"
-        component={Tabs}
-        options={{ headerShown: false }}
-      />
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      {/* Loader shown on app start */}
+      <Stack.Screen name="Loader" component={LoaderScreen} />
 
-      {/* Hidden screen (navigated to programmatically) */}
+      {/* Auth screens */}
+      <Stack.Screen name="Login" component={LoginScreen} />
+      <Stack.Screen name="Signup" component={SignupScreen} />
+      <Stack.Screen name="Admin" component={AdminDashboard} />
+      <Stack.Screen name="Home" component={HomeScreen} />
+
+
+      {/* Main app */}
+      <Stack.Screen name="MainTabs" component={Tabs} />
+
+      {/* Hidden detail screens */}
       <Stack.Screen
         name="CarDetails"
         component={CarDetailsScreen}
         options={{
+          headerShown: true,
           title: 'Car Details',
           headerStyle: { backgroundColor: colors.primary },
           headerTintColor: '#fff',

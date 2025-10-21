@@ -4,23 +4,26 @@ import { View, Text } from 'react-native';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
-import AppNavigator from './src/navigation/AppNavigator'; // ✅ Make sure this file exists
+import AppNavigator from './src/navigation/AppNavigator';
+import { ThemeProvider } from './src/Context/ThemeContext'; // ✅ import ThemeProvider
 
 export default function App() {
   console.log('✅ App.js rendering...');
 
   return (
-    <PaperProvider>
-      <NavigationContainer>
-        {/* Light status bar on dark backgrounds */}
-        <StatusBar style="light" />
+    <ThemeProvider>
+      <PaperProvider>
+        <NavigationContainer>
+          {/* Light status bar on dark backgrounds */}
+          <StatusBar style="light" />
 
-        {/* Safety check: if AppNavigator fails, show fallback */}
-        <AppNavigatorFallbackBoundary>
-          <AppNavigator />
-        </AppNavigatorFallbackBoundary>
-      </NavigationContainer>
-    </PaperProvider>
+          {/* Safety check: if AppNavigator fails, show fallback */}
+          <AppNavigatorFallbackBoundary>
+            <AppNavigator />
+          </AppNavigatorFallbackBoundary>
+        </NavigationContainer>
+      </PaperProvider>
+    </ThemeProvider>
   );
 }
 
